@@ -10,6 +10,7 @@ import (
 
     "github.com/Tabintel/static-site-generator/internal/generator"
     "github.com/Tabintel/static-site-generator/internal/parser"
+    "github.com/Tabintel/static-site-generator/internal/watcher"
 )
 
 func main() {
