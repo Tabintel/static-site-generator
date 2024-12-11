@@ -3,7 +3,6 @@ package parser
 import (
     "bytes"
     "gopkg.in/yaml.v2"
-    "strings"
 )
 
 type Frontmatter struct {

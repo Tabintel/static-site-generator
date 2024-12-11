@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Static Site</title>
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .post-list {
+            list-style: none;
+            padding: 0;
+        }
+        .post-item {
+            margin-bottom: 2em;
+        }
+        .post-date {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/feed.xml">
+</head>
+<body>    <h1>Blog Posts</h1>
+    <ul class="post-list">
+        {{range .Posts}}
+        <li class="post-item">
+            <h2><a href="{{.URL}}">{{.Title}}</a></h2>
+            <span class="post-date">{{.FormattedDate}}</span>
+            <p>{{.Description}}</p>
+            <div class="tags">
+                {{range .Tags}}
+                <a href="/tags/{{.}}.html">{{.}}</a>
+                {{end}}
+            </div>
+        </li>
+        {{end}}
+    </ul>
+</body>
+</html>

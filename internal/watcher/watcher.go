@@ -4,6 +4,7 @@ import (
     "fmt"
     "github.com/fsnotify/fsnotify"
     "log"
+    "os"
     "path/filepath"
 )
 

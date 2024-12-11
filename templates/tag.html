@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts tagged with {{.Tag}}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Posts tagged with "{{.Tag}}"</h1>
+    </header>
+    <main>
+        <ul class="post-list">
+            {{range .Posts}}
+            <li class="post-item">
+                <h2><a href="/{{.URL}}" class="post-title">{{.Title}}</a></h2>
+                <span class="post-date">{{.FormattedDate}}</span>
+                <p>{{.Description}}</p>
+                <div class="tags">
+                    {{range .Tags}}
+                    <a href="/tags/{{.}}.html" class="tag">{{.}}</a>
+                    {{end}}
+                </div>
+            </li>
+            {{end}}
+        </ul>
+    </main>
+    <p><a href="/" class="back-link">Back to Home</a></p>
+</body>
+</html>

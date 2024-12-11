@@ -13,29 +13,6 @@ import (
     "github.com/Tabintel/static-site-generator/internal/watcher"
 )
 
-func main() {
-    // Define flags
-    contentDir := flag.String("content", "content", "Content directory path")
-    templateDir := flag.String("templates", "templates", "Templates directory path")
-    outputDir := flag.String("output", "output", "Output directory path")
-    watch := flag.Bool("watch", false, "Watch for file changes")
-    flag.Parse()
-
-    // Initialize generator
-    gen := generator.NewGenerator(*templateDir, *outputDir)
-
-    // Process files
-    err := processFiles(*contentDir, gen)
-    if err != nil {
-        log.Fatal(err)
-    }
-
-    if *watch {
-        fmt.Println("Watching for changes...")
-        // File watching will be implemented next
-    }
-}
-
 func processFiles(contentDir string, gen *generator.Generator) error {
     return filepath.Walk(contentDir, func(path string, info os.FileInfo, err error) error {
         if err != nil {
@@ -70,4 +47,32 @@ func processFiles(contentDir string, gen *generator.Generator) error {
             "Description": meta.Description,
         }, outputFile)
     })
+}
+
+func main() {
+    // Define flags
+    contentDir := flag.String("content", "content", "Content directory path")
+    templateDir := flag.String("templates", "templates", "Templates directory path")
+    outputDir := flag.String("output", "output", "Output directory path")
+    watch := flag.Bool("watch", false, "Watch for file changes")
+    flag.Parse()
+
+    // Initialize generator
+    gen := generator.NewGenerator(*templateDir, *outputDir)
+
+    // Process files
+    err := processFiles(*contentDir, gen)
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    if *watch {
+        fmt.Println("Watching for changes...")
+        err := watcher.Watch(*contentDir, func() error {
+            return processFiles(*contentDir, gen)
+        })
+        if err != nil {
+            log.Fatal(err)
+        }
+    }
 }
